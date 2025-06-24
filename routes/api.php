@@ -3,6 +3,7 @@
     use App\Http\Controllers\Api\HomeController;
     use App\Http\Controllers\Api\CartItemController;
     use App\Http\Controllers\Api\AuthController;
+    use App\Http\Controllers\Api\SellerProductController;
 
     Route::prefix('home')->group(function () {
         Route::get('/', [HomeController::class, 'index']);
@@ -18,6 +19,13 @@
         Route::post('/add', [CartItemController::class, 'add']);
         Route::delete('/remove', [CartItemController::class, 'remove']);
     });
+
+    Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/seller/products', [SellerProductController::class, 'store']);
+    Route::put('/seller/products/{id}', [SellerProductController::class, 'update']);
+    Route::delete('/seller/products/{id}', [SellerProductController::class, 'destroy']);
+});
+
 
     Route::post('/login', [AuthController::class, 'login']);
 ?>
